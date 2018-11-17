@@ -17,10 +17,20 @@ async function action({ fetch }) {
       query: '{news{title,link,content}}',
     }),
   });
-  const { data } = await resp.json();
+  let { data } = await resp.json();
+  // override with dummy data for now
+  data = {
+    news: [
+      {
+        link: '/',
+        title: 'Gud Side',
+        content: 'Lorem ipsum',
+      },
+    ],
+  };
   if (!data || !data.news) throw new Error('Failed to load the news feed.');
   return {
-    title: 'React Starter Kit',
+    title: 'GudSide Home',
     chunks: ['home'],
     component: (
       <Layout>
